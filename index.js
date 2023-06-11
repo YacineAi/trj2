@@ -184,7 +184,9 @@ const onPostBack = async (senderId, message, postback) => {
            botly.createQuickReply("سمسمي 🌞", "simsimi")]});
       }
     } else { // Quick Reply
-      if (message.message.text == "ChangeLang") {
+      if (message.message.text == "ssss") {
+        //
+      } else if (postback == "ChangeLang") {
         botly.sendText({id: senderId, text: `أنت تتحدث ${langbtn(user[0].main)} و يتم ترجمة كلامك إلى ${langbtn(user[0].sub)} 😀 \nإذا اردت تغيير الخيارات إضغط على أحد الازر 👇🏻`,
         quick_replies: [
           botly.createQuickReply(langbtn(user[0].main), "SetMain"),
