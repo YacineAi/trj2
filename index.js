@@ -84,23 +84,30 @@ async function updateUser(id, update) {
     }
 };
 
+async function userDb(userId) {
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('uid', userId);
+
+  if (error) {
+    console.error('Error checking user:', error);
+  } else {
+    return data
+  }
+};
+
 /* ----- HANDELS ----- */
 
 const onMessage = async (senderId, message) => {
-  const { user, error } = await supabase
-    .from('users')
-    .select('uid')
-    .eq('uid', senderId);    
-    if (error) {
-      console.log("DB Err : ", error)
-    };
+  const user = await userDb(senderId);
     /* ---- */
     if (message.message.text) {
-      if (user.length != 0) {
-        axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${user.main}&dt=t&q=${message.message.text}`)
+      if (user[0]) {
+        axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${user[0].main}&dt=t&q=${message.message.text}`)
         .then (({ data }) => {
-          if (user.main == data[2]) {
-            axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${user.sub}&dt=t&q=${message.message.text}`)
+          if (user[0].main == data[2]) {
+            axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${user[0].sub}&dt=t&q=${message.message.text}`)
         .then (({ data }) => {
           let text = "";
           data[0].forEach(element => {
@@ -154,21 +161,15 @@ const onMessage = async (senderId, message) => {
 /* ----- POSTBACK ----- */
 
 const onPostBack = async (senderId, message, postback) => {
-  const { user, error } = await supabase
-    .from('users')
-    .select('uid')
-    .eq('uid', senderId);    
-    if (error) {
-      console.log("DB Err : ", error)
-    };
+  const user = await userDb(senderId);
     /* ---- */
     if (message.postback){ // Normal (buttons)
       if (postback == "GET_STARTED"){
       } else if (postback == "ChangeLang") {
-        botly.sendText({id: senderId, text: `أنت تتحدث ${langbtn(user.main)} و يتم ترجمة كلامك إلى ${langbtn(user.sub)} 😀 \nإذا اردت تغيير الخيارات إضغط على أحد الازر 👇🏻`,
+        botly.sendText({id: senderId, text: `أنت تتحدث ${langbtn(user[0].main)} و يتم ترجمة كلامك إلى ${langbtn(user[0].sub)} 😀 \nإذا اردت تغيير الخيارات إضغط على أحد الازر 👇🏻`,
           quick_replies: [
-            botly.createQuickReply(langbtn(user.main), "SetMain"),
-            botly.createQuickReply(langbtn(user.sub), "SetSub")]});
+            botly.createQuickReply(langbtn(user[0].main), "SetMain"),
+            botly.createQuickReply(langbtn(user[0].sub), "SetSub")]});
       } else if (postback == "SetSub") {
       } else if (postback == "OurBots") {
         botly.sendText({id: senderId, text: `مرحبا 👋\nيمكنك تجربة كل الصفحات التي أقدمها لكم 👇 إضغط على إسم أي صفحة للتعرف عليها و مراسلتها 💬 كل الصفحات تعود لصانع واحد و كل ماتراه أمامك يُصنع بكل حـ💜ـب و إهتمام في ليالي الارض الجزائرية.\n• ${quote.quotes()} •`,
