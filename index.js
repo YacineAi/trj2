@@ -151,6 +151,10 @@ const onMessage = async (senderId, message) => {
       } else if (message.message.attachments[0].payload.sticker_id) {
         //botly.sendText({id: senderId, text: "(Y)"});
       } else if (message.message.attachments[0].type == "image") {
+        axios.get(`https://ocrx-1-v4293320.deta.app/image?url=${message.message.attachments[0].payload.url}`)
+        .then(({ data }) => {
+          botly.sendText({id: senderId, text: data.result});
+        })
         botly.sendText({id: senderId, text: "لايمكننا ترجمة الصور 📷 بعد! إستعمل النصوص فقط 🤠"});
       } else if (message.message.attachments[0].type == "audio") {
         botly.sendText({id: senderId, text: "لا يمكنني ترجمة الصوت للأسف! إستعمل النصوص فقط 😐"});
