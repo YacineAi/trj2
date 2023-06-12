@@ -125,9 +125,16 @@ const onMessage = async (senderId, message) => {
             data[0].forEach(element => {
               text += '\n' + element[0];
             });
-            botly.sendText({id: senderId, text: text,
-              quick_replies: [
-                botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang")]});
+            if (text.length <= 200) {
+              botly.sendText({id: senderId, text: text,
+                quick_replies: [
+                  botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang"),
+                  botly.createQuickReply("النطق 🗣️", `${user[0].main}-${text}`)]});
+            } else {
+              botly.sendText({id: senderId, text: text,
+                quick_replies: [
+                  botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang")]});
+            }
               }
         }, error => {
           console.log(error)
@@ -218,8 +225,16 @@ const onPostBack = async (senderId, message, postback) => {
            botly.createQuickReply("سمسمي 🌞", "simsimi")]});
       }
     } else { // Quick Reply
-      if (message.message.text == "ssss") {
-        //
+      if (message.message.text == "النطق 🗣️") {
+        let lnCode = postback.split("-");
+        botly.sendAttachment({
+          id: senderId,
+          type: Botly.CONST.ATTACHMENT_TYPE.AUDIO,
+          payload: {url: `https://translate.google.com/translate_tts?ie=UTF-8&q=${lnCode[1]}&tl=${lnCode[0]}&client=tw-ob`}
+      }, (err, data) => {
+              console.log("Data : ", data)
+              console.log("err : ", err)
+      });
       } else if (postback == "ChangeLang") {
         botly.sendText({id: senderId, text: `أنت تتحدث ${langbtn(user[0].main)} و يتم ترجمة كلامك إلى ${langbtn(user[0].sub)} 😀 \nإذا اردت تغيير الخيارات إضغط على أحد الازر 👇🏻`,
         quick_replies: [
