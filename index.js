@@ -31,31 +31,31 @@ app.post('/webhook', (req, res) => {
 
 const langbtn = (code) => {
   if (code == "ar") {
-    return "Arabic 🇩🇿";
+    return "العربية 🇩🇿";
   } else if (code == "en") {
-    return "English 🇺🇸";
+    return "الأنجليزية 🇺🇸";
   } else if (code == "fr") {
-    return "French 🇫🇷";
+    return "الفرنسية 🇫🇷";
   } else if (code == "de") {
-    return "German 🇩🇪";
+    return "الألمانية 🇩🇪";
   } else if (code == "es") {
-    return "Spanish 🇪🇸";
+    return "الإسبانية 🇪🇸";
   } else if (code == "ru") {
-    return "Russian 🇷🇺";
+    return "الروسية 🇷🇺";
   } else if (code == "it") {
-    return "Italian 🇮🇹";
+    return "الإيطالية 🇮🇹";
   } else if (code == "tr") {
-    return "Turkish 🇹🇷";
+    return "التركية 🇹🇷";
   } else if (code == "ko") {
-    return "Korean 🇰🇷";
+    return "الكورية 🇰🇷";
   } else if (code == "ja") {
-    return "Japanese 🇯🇵";
+    return "اليابانية 🇯🇵";
   } else if (code == "hi") {
-    return "Hindi 🇮🇳";
+    return "الهندية 🇮🇳";
   } else if (code == "sq") {
-    return "Albanian 🇦🇱";
+    return "الألبانية 🇦🇱";
   } else if (code == "sv") {
-    return "Swedish 🇸🇪";
+    return "السويدية 🇸🇪";
   }
 };
 
