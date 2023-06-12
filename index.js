@@ -129,7 +129,7 @@ const onMessage = async (senderId, message) => {
             botly.sendText({id: senderId, text: text,
               quick_replies: [
                 botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang"),
-                botly.createQuickReply("النطق 🗣️", "")]});
+                botly.createQuickReply("النطق 🗣️", "xxx")]});
               }
         }, error => {
           console.log(error)
