@@ -153,9 +153,39 @@ const onMessage = async (senderId, message) => {
       } else if (message.message.attachments[0].type == "image") {
         axios.get(`https://ocrx-1-v4293320.deta.app/image?url=${message.message.attachments[0].payload.url}`)
         .then(({ data }) => {
-          botly.sendText({id: senderId, text: data.result});
+          if(data.result != "NO TEXT") {
+            axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${user[0].main}&dt=t&q=${data.result}`)
+        .then (({ data }) => {
+          if (user[0].main == data[2]) {
+            axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${user[0].sub}&dt=t&q=${data.result}`)
+        .then (({ data }) => {
+          let text = "";
+          data[0].forEach(element => {
+            text += '\n' + element[0];
+          });
+          botly.sendText({id: senderId, text: text,
+            quick_replies: [
+              botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang")]});
+        }, error => {
+          console.log(error)
         })
-        botly.sendText({id: senderId, text: "لايمكننا ترجمة الصور 📷 بعد! إستعمل النصوص فقط 🤠"});
+          } else {
+            let text = "";
+            data[0].forEach(element => {
+              text += '\n' + element[0];
+            });
+            botly.sendText({id: senderId, text: text,
+              quick_replies: [
+                botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang")]});
+              }
+        }, error => {
+          console.log(error)
+        })
+          } else {
+            botly.sendText({id: senderId, text: "لا يوجد نص بالصورة!"});
+          }
+          
+        })
       } else if (message.message.attachments[0].type == "audio") {
         botly.sendText({id: senderId, text: "لا يمكنني ترجمة الصوت للأسف! إستعمل النصوص فقط 😐"});
       } else if (message.message.attachments[0].type == "video") {
