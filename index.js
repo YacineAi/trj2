@@ -137,18 +137,20 @@ const onMessage = async (senderId, message) => {
         } else {
           await createUser({uid: senderId, main: "ar", sub: "en" })
           .then((data, error) => {
-            // data[2] => detect
-            axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${message.message.text}`)
-            .then (({ data }) => {
-              let text = "";
-              data[0].forEach(element => {
-              text += '\n' + element[0];
+            botly.send({
+              "id": senderId,
+              "message": {
+              "text": "مرحبا بك في ترجمان 💜\nيبدو أنك مستعمل جديد 😁 مرحبا بك في صفحتك عزيزي 🤗\n- إذا كنت تعرف كيفية إستعمال ترجمان 📲 فأنت جاهز ☑️👌🏻. أما في حالة ما كنت لا تعرف كيفية إستعمال الصفحة دعني أشرح لك 😀",
+              "quick_replies":[
+                {
+                  "content_type":"text",
+                  "title":"كيفية الإستعمال 🤔",
+                  "payload":"step1",
+                }
+              ]
+            }
             });
-            botly.sendText({id: senderId, text: text,
-              quick_replies: [
-                botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang")]});
-              }, error => { console.log(error) })
-              });
+          });
         }
       } else if (message.message.attachments[0].payload.sticker_id) {
         //botly.sendText({id: senderId, text: "(Y)"});
@@ -235,55 +237,55 @@ const onPostBack = async (senderId, message, postback) => {
           "quick_replies":[
             {
               "content_type":"text",
-              "title":"Arabic 🇩🇿",
+              "title":"العربية 🇩🇿",
               "payload":"ar",
             },{
               "content_type":"text",
-              "title":"English 🇺🇸",
+              "title":"الأنجليزية 🇺🇸",
               "payload":"en",
             },{
               "content_type":"text",
-              "title":"French 🇫🇷",
+              "title":"الفرنسية 🇫🇷",
               "payload":"fr",
             },{
               "content_type":"text",
-              "title":"German 🇩🇪",
+              "title":"الألمانية 🇩🇪",
               "payload":"de",
             },{
               "content_type":"text",
-              "title":"Spanish 🇪🇸",
+              "title":"الإسبانية 🇪🇸",
               "payload":"es",
             },{
               "content_type":"text",
-              "title":"Russian 🇷🇺",
+              "title":"الروسية 🇷🇺",
               "payload":"ru",
             },{
               "content_type":"text",
-              "title":"Italian 🇮🇹",
+              "title":"الإيطالية 🇮🇹",
               "payload":"it",
             },{
               "content_type":"text",
-              "title":"Turkish 🇹🇷",
+              "title":"التركية 🇹🇷",
               "payload":"tr",
             },{
               "content_type":"text",
-              "title":"Korean 🇰🇷",
+              "title":"الكورية 🇰🇷",
               "payload":"ko",
             },{
               "content_type":"text",
-              "title":"Japanese 🇯🇵",
+              "title":"اليابانية 🇯🇵",
               "payload":"ja",
             },{
               "content_type":"text",
-              "title":"Hindi 🇮🇳",
+              "title":"الهندية 🇮🇳",
               "payload":"hi",
             },{
               "content_type":"text",
-              "title":"Albanian 🇦🇱",
+              "title":"الألبانية 🇦🇱",
               "payload":"sq",
             },{
               "content_type":"text",
-              "title":"Swedish 🇸🇪",
+              "title":"السويدية 🇸🇪",
               "payload":"sv",
             }
           ]
@@ -297,61 +299,134 @@ const onPostBack = async (senderId, message, postback) => {
           "quick_replies":[
             {
               "content_type":"text",
-              "title":"Arabic 🇩🇿",
+              "title":"العربية 🇩🇿",
               "payload":"sub-ar",
             },{
               "content_type":"text",
-              "title":"English 🇺🇸",
+              "title":"الأنجليزية 🇺🇸",
               "payload":"sub-en",
             },{
               "content_type":"text",
-              "title":"French 🇫🇷",
+              "title":"الفرنسية 🇫🇷",
               "payload":"sub-fr",
             },{
               "content_type":"text",
-              "title":"German 🇩🇪",
+              "title":"الألمانية 🇩🇪",
               "payload":"sub-de",
             },{
               "content_type":"text",
-              "title":"Spanish 🇪🇸",
+              "title":"الإسبانية 🇪🇸",
               "payload":"sub-es",
             },{
               "content_type":"text",
-              "title":"Russian 🇷🇺",
+              "title":"الروسية 🇷🇺",
               "payload":"sub-ru",
             },{
               "content_type":"text",
-              "title":"Italian 🇮🇹",
+              "title":"الإيطالية 🇮🇹",
               "payload":"sub-it",
             },{
               "content_type":"text",
-              "title":"Turkish 🇹🇷",
+              "title":"التركية 🇹🇷",
               "payload":"sub-tr",
             },{
               "content_type":"text",
-              "title":"Korean 🇰🇷",
+              "title":"الكورية 🇰🇷",
               "payload":"sub-ko",
             },{
               "content_type":"text",
-              "title":"Japanese 🇯🇵",
+              "title":"اليابانية 🇯🇵",
               "payload":"sub-ja",
             },{
               "content_type":"text",
-              "title":"Hindi 🇮🇳",
+              "title":"الهندية 🇮🇳",
               "payload":"sub-hi",
             },{
               "content_type":"text",
-              "title":"Albanian 🇦🇱",
+              "title":"الألبانية 🇦🇱",
               "payload":"sub-sq",
             },{
               "content_type":"text",
-              "title":"Swedish 🇸🇪",
+              "title":"السويدية 🇸🇪",
               "payload":"sub-sv",
             }
           ]
         }
         });
-      } else if (postback == "callerbot") {
+       } else if (postback == "step1"){
+        botly.sendText({id: senderId, text: "بشكل تلقائي 🛡️ يتم تحديد لغتك الخاصة إلى العربية و اللغة التي يتم الترجمة اليها هي الأنجليزية 👌🏻"},
+         function (err, data) {
+          botly.sendAttachment({
+            id: senderId,
+            type: Botly.CONST.ATTACHMENT_TYPE.IMAGE,
+            payload: {
+              url: "https://i.ibb.co/NW59dtJ/step1.jpg",
+            },
+            quick_replies: [
+              botly.createQuickReply("التالي ⏪", "step2"),
+            ]
+          });
+         });
+       } else if (postback == "step2"){
+        botly.sendText({id: senderId, text: "🤗 لا داعي لتغيير اللغة كل مرة. لقد سهلنا الامور عليك.\nالان عند اختيارك للعربية كلغة أساسية و الانجليزية كلغة ثانية 📲 سيتم التبديل بينهما 🔃 بإستعمال خورزميتنا 😁"},
+         function (err, data) {
+          botly.sendAttachment({
+            id: senderId,
+            type: Botly.CONST.ATTACHMENT_TYPE.IMAGE,
+            payload: {
+              url: "https://i.ibb.co/YNm9y9P/step2.jpg",
+            },
+            quick_replies: [
+              botly.createQuickReply("التالي ⏪", "step3"),
+            ]
+          });
+         });
+       } else if (postback == "step3"){
+        botly.sendText({id: senderId, text: "ترجمة الصور تعمل بشكل تلقائي 🤷🏻‍♂️\nيتم ترجمة الصور من أي لغة الى لغتك الأساسية (العربية 🇩🇿)"},
+         function (err, data) {
+          botly.sendAttachment({
+            id: senderId,
+            type: Botly.CONST.ATTACHMENT_TYPE.IMAGE,
+            payload: {
+              url: "https://i.ibb.co/ZBsftDb/step3.jpg",
+            },
+            quick_replies: [
+              botly.createQuickReply("التالي ⏪", "step4"),
+            ]
+          });
+         });
+       } else if (postback == "step4"){
+        botly.sendText({id: senderId, text: "زر النطق 🗣️ يظهر فقط عندما تقوم بترجمة جملة من العربية إلى الأنجليزية أو لغتك الثانية 🌟\nملاحظة! :\nقد يختفي الزر عندما تكون الجملة طويلة نوعا ما 🙄. لقد وضعنا حد 200 حرف لتفادي الاستعمال السيئ للميزة ☑️👌🏻"},
+         function (err, data) {
+          botly.sendAttachment({
+            id: senderId,
+            type: Botly.CONST.ATTACHMENT_TYPE.IMAGE,
+            payload: {
+              url: "https://via.placeholder.com/500x300?text=%D8%A7%D9%84%D9%85%D9%8A%D8%B2%D8%A9%20%D8%BA%D9%8A%D8%B1%20%D9%85%D8%AA%D8%A7%D8%AD%D8%A9%20%D8%A8%D8%B9%D8%AF",
+            },
+            quick_replies: [
+              botly.createQuickReply("تم ☑️", "step5"),
+            ]
+          });
+         });
+       } else if (postback == "step5"){
+        botly.sendAttachment({
+          id: senderId,
+          type: Botly.CONST.ATTACHMENT_TYPE.IMAGE,
+          payload: {
+            url: "https://i.ibb.co/Dt6bRw8/Screenshot-2023-06-13-01-01-34-749-com-facebook-katana.png",
+          },
+        },
+        function (err, data) {
+          botly.sendButtons({id: senderId, text: "إذا وصلت لهذه المرحلة فأنت جاهز لإستعمال ترجمان 😁👌🏻.\nشكرا لإستعمالك للصفحة 🤗🤍\n- إذا أعجبك عملي الخاص و أردت إضافة شيئ مفيد 📲\nراسلني على حسابي أو اترك متابعة 😀 لمعرفة أخر الصفحات التي أقدمها 😇👇🏻",
+          buttons: [
+            botly.createWebURLButton("حسابي 💻", "https://www.facebook.com/0xNoti")
+          ]});
+        });
+
+       } else if (postback == "6"){
+       } else if (postback == "7"){
+       } else if (postback == "callerbot") {
         botly.sendGeneric({id: senderId, elements: {
            title: "CallerBot - كالربوت",
            image_url: "https://i.ibb.co/gM5pKr4/gencallerbot.png",
