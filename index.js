@@ -126,7 +126,7 @@ const onMessage = async (senderId, message) => {
             data[0].forEach(element => {
               text += '\n' + element[0];
             });
-            botly.sendText({id: senderId, text: text,
+            botly.sendText({id: senderId, text: text + "\n\n\n- - - ------( 📣💬💻 )------ - - -\nلضمان متابعة تقديم الخدمة يرجى دعمنا بمتابعة حساب صاحب الصفحة :\nhttps://facebook.com/0xNoti",
               quick_replies: [
                 botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang"),
                 botly.createQuickReply("النطق 🗣️", "xxx")]});
