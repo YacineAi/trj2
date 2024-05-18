@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const Botly = require("botly");
 const quote = require('./quotes');
 const axios = require("axios");
+const https = require("https");
 const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient(process.env.SB_URL, process.env.SB_KEY, { auth: { persistSession: false} });
 const botly = new Botly({
