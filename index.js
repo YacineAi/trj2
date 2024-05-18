@@ -101,9 +101,10 @@ async function userDb(userId) {
 /* ----- HANDELS ----- */
 
 const onMessage = async (senderId, message) => {
-  const user = await userDb(senderId);
+  
     /* ---- */
     if (message.message.text) {
+      const user = await userDb(senderId);
       if (user[0]) {
         axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${user[0].main}&dt=t&q=${message.message.text}`)
         .then (({ data }) => {
@@ -155,7 +156,9 @@ const onMessage = async (senderId, message) => {
       } else if (message.message.attachments[0].payload.sticker_id) {
         //botly.sendText({id: senderId, text: "(Y)"});
       } else if (message.message.attachments[0].type == "image") {
-        axios.get(`https://ocrx-1-v4293320.deta.app/image?url=${message.message.attachments[0].payload.url}`)
+        const user = await userDb(senderId);
+        if (user[0]) {
+          axios.get(`https://ocrx-1-v4293320.deta.app/image?url=${message.message.attachments[0].payload.url}`)
         .then(({ data }) => {
           if(data.result != "NO TEXT") {
             axios.get(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${user[0].main}&dt=t&q=${data.result}`)
@@ -189,7 +192,25 @@ const onMessage = async (senderId, message) => {
             botly.sendText({id: senderId, text: "لا يوجد نص بالصورة!"});
           }
           
-        })
+        });
+        } else {
+          await createUser({uid: senderId, main: "ar", sub: "en" })
+          .then((data, error) => {
+            botly.send({
+              "id": senderId,
+              "message": {
+              "text": "مرحبا بك في ترجمان 💜\nيبدو أنك مستعمل جديد 😁 مرحبا بك في صفحتك عزيزي 🤗\n- إذا كنت تعرف كيفية إستعمال ترجمان 📲 فأنت جاهز ☑️👌🏻. أما في حالة ما كنت لا تعرف كيفية إستعمال الصفحة دعني أشرح لك 😀",
+              "quick_replies":[
+                {
+                  "content_type":"text",
+                  "title":"كيفية الإستعمال 🤔",
+                  "payload":"step1",
+                }
+              ]
+            }
+            });
+          });
+        }
       } else if (message.message.attachments[0].type == "audio") {
         botly.sendText({id: senderId, text: "لا يمكنني ترجمة الصوت للأسف! إستعمل النصوص فقط 😐"});
       } else if (message.message.attachments[0].type == "video") {
