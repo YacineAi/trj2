@@ -14,6 +14,21 @@ const botly = new Botly({
 app.get("/", function(_req, res) {
 	res.sendStatus(200);
 });
+
+app.get('/ping', (req, res) => { res.status(200).json({ message: 'Ping successful' }); });
+
+function keepAppRunning() {
+  setInterval(() => {
+      https.get(`${process.env.RENDER_EXTERNAL_URL}/ping`, (resp) => {
+          if (resp.statusCode === 200) {
+              console.log('Ping successful');
+          } else {
+              console.error('Ping failed');
+          }
+      });
+  }, 5 * 60 * 1000);
+};
+
 /* ----- ESSENTIALS ----- */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -560,4 +575,8 @@ const onPostBack = async (senderId, message, postback) => {
     }
 };
 /* ----- HANDELS ----- */
-app.listen(3000, () => console.log(`App is on port : 3000`));
+app.listen(3000, async () => {
+    var myip = await axios.get("https://api.ipify.org/");
+    console.log(`App is on port : 3000 | IP : ${myip.data}🥳`);
+    keepAppRunning();
+  });
