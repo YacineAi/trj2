@@ -131,7 +131,7 @@ const onMessage = async (senderId, message) => {
           data[0].forEach(element => {
             text += '\n' + element[0];
           });
-          botly.sendText({id: senderId, text: text + "\n\n\n- - - ------( 📣💬💻 )------ - - -\nلضمان متابعة تقديم الخدمة يرجى دعمنا بمتابعة حساب صاحب الصفحة :\nhttps://facebook.com/0xNoti",
+          botly.sendText({id: senderId, text: text + "\n\n\nهذه ترجمة من Lingex Bot 💬.",
             quick_replies: [
               botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang"),
               botly.createQuickReply("النطق 🗣️", "xxx")]});
@@ -143,7 +143,7 @@ const onMessage = async (senderId, message) => {
             data[0].forEach(element => {
               text += '\n' + element[0];
             });
-            botly.sendText({id: senderId, text: text + "\n\n\n- - - ------( 📣💬💻 )------ - - -\nلضمان متابعة تقديم الخدمة يرجى دعمنا بمتابعة حساب صاحب الصفحة :\nhttps://facebook.com/0xNoti",
+            botly.sendText({id: senderId, text: text + "\n\n\nهذه ترجمة من Lingex Bot 💬.",
               quick_replies: [
                 botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang"),
                 botly.createQuickReply("النطق 🗣️", "xxx")]});
@@ -186,7 +186,7 @@ const onMessage = async (senderId, message) => {
           data[0].forEach(element => {
             text += '\n' + element[0];
           });
-          botly.sendText({id: senderId, text: text + "\n\n\n- - - ------( 📣💬💻 )------ - - -\nلضمان متابعة تقديم الخدمة يرجى دعمنا بمتابعة حساب صاحب الصفحة :\nhttps://facebook.com/0xNoti",
+          botly.sendText({id: senderId, text: text + "\n\n\nهذه ترجمة من Lingex Bot 💬.",
             quick_replies: [
               botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang")]});
         }, error => {
@@ -197,7 +197,7 @@ const onMessage = async (senderId, message) => {
             data[0].forEach(element => {
               text += '\n' + element[0];
             });
-            botly.sendText({id: senderId, text: text + "\n\n\n- - - ------( 📣💬💻 )------ - - -\nلضمان متابعة تقديم الخدمة يرجى دعمنا بمتابعة حساب صاحب الصفحة :\nhttps://facebook.com/0xNoti",
+            botly.sendText({id: senderId, text: text + "\n\n\nهذه ترجمة من Lingex Bot 💬.",
               quick_replies: [
                 botly.createQuickReply("تغيير اللغة 🇺🇲🔄", "ChangeLang")]});
               }
